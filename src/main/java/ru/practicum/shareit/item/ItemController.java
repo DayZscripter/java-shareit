@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.user.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -17,45 +20,58 @@ import java.util.List;
 @RequestMapping("/items")
 @Slf4j
 @AllArgsConstructor
-public class ItemController { //контроллер CRUD операций над вещами.
+public class ItemController {
     ItemService itemService;
+    UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    //Добавление новой вещи. X-Sharer-User-Id это идентификатор юзера, который добавляет вещь
-    public ItemDto addItem(@Valid @RequestBody ItemDto itemDto,
-                           @RequestHeader("X-Sharer-User-Id") Long userId) { //id юзера-владельца добавившего вещь
+    public ItemDto addItem(@Valid @RequestBody ItemDto itemDto, @RequestHeader("X-Sharer-User-Id") Long userId) {
         log.info("Добавлена вещь: {}", itemDto);
         return itemService.addItem(userId, itemDto);
     }
 
-    @GetMapping("/{id}")
-    public ItemDto getItemById(@PathVariable long id) { //Просмотр инфо о конкретной вещи по id
-        return itemService.getItemByUserId(id);
-    }
-
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    //Просмотр владельцем списка всех его вещей с указанием названия и описания для каждой.
-    public List<ItemDto> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
-        return itemService.getItemsByUserId(userId);
-    }
-
     @PatchMapping("/{itemId}")
     @ResponseStatus(HttpStatus.OK)
-    //Редактирование вещи владельцем.(Изменить можно название,описание и статус доступа к аренде)
     public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") long userId,
-                              @PathVariable long itemId, @RequestBody ItemDto itemDto) {
+                              @PathVariable long itemId,
+                              @RequestBody ItemDto itemDto) {
 
         itemDto.setId(itemId);
         log.info("Обновление вещи id: {}", userId);
         return itemService.updateItem(userId, itemDto);
     }
 
+    @GetMapping("/{itemId}")
+    public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") long userId, @PathVariable long itemId) {
+        return itemService.getItem(itemId, userId);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemDto> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
+        return itemService.getItemsByUserId(userId);
+    }
+
     @GetMapping("/search")
-    //Поиск вещи потенциальным арендатором
-    public List<ItemDto> findByText(@RequestHeader("X-Sharer-User-Id") long userId,
-                                    @RequestParam(value = "text") String text) {
+    public List<ItemDto> seachText(@RequestHeader("X-Sharer-User-Id") long userId,
+                                   @RequestParam(value = "text") String text) {
         return itemService.searchText(text);
     }
+
+    @PostMapping("/{itemId}/comment")
+    @ResponseStatus(HttpStatus.OK)
+    public CommentDto addComment(@RequestHeader("X-Sharer-User-Id") long userId,
+                                 @RequestBody CommentDto commentDto,
+                                 @PathVariable long itemId) {
+
+        String text = commentDto.getText();
+        if (text.isEmpty()) {
+            throw new ValidationException("Поле text не может быть пустым!");
+        }
+        commentDto.setText(text);
+        return itemService.addComment(userId, itemId, commentDto);
+    }
+
+
 }

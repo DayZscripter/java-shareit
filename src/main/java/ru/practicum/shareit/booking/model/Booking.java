@@ -1,26 +1,39 @@
 package ru.practicum.shareit.booking.model;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.booking.enums.BookingStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * TODO Sprint add-bookings.
  */
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
+@Table(name = "bookings", schema = "public")
 public class Booking {
-    Long id;                //уникальный идентификатор бронирования.
-    LocalDateTime start;    //дата и время начала бронирования.
-    LocalDateTime end;      //дата и время окончания бронирования.
-    Item item;              //вещь, которую пользователь бронирует.
-    User booker;            //пользователь, который осуществляет бронирование.
-    BookingStatus status;   //статус бронирования. может принимать одно из нескольких значений.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "starts", nullable = false)
+    private LocalDateTime starts;
+    @Column(name = "ends", nullable = false)
+    private LocalDateTime ends;
+    @ManyToOne
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
+    @ManyToOne
+    @JoinColumn(name = "booker_id", nullable = false)
+    private User booker;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 }

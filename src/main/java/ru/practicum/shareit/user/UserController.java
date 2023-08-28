@@ -17,13 +17,13 @@ import java.util.List;
 @RequestMapping("/users")
 @Slf4j
 @AllArgsConstructor
-public class UserController {    //контроллер для управления пользователями — создания, редактирования и просмотра.
+public class UserController {
     UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@Valid @RequestBody UserDto user) {
-        log.info("Создан пользователь: {}", user);
+    public UserDto addUser(@Valid @RequestBody UserDto user) {
+        log.info("Добавлен пользователь: {}", user);
         return userService.addUser(user);
     }
 
@@ -31,11 +31,6 @@ public class UserController {    //контроллер для управлен�
     @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getUsers() {
         return userService.getAllUsers();
-    }
-
-    @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable long id) {
-        return userService.getUserById(id);
     }
 
     @PatchMapping("/{userId}")
@@ -46,10 +41,15 @@ public class UserController {    //контроллер для управлен�
         return userService.updateUser(user);
     }
 
+    @GetMapping("/{id}")
+    public UserDto getUserById(@PathVariable long id) {
+        return userService.getUserById(id);
+    }
+
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteUser(@PathVariable int userId) {
-        log.info("Был удален пользователь по id: {}", userId);
+        log.info("Пользователь был удален из списка по id: {}", userId);
         userService.deleteUser(userId);
     }
 }

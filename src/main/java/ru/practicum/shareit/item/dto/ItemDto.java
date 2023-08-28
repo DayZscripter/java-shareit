@@ -2,8 +2,12 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO Sprint add-controllers.
@@ -15,14 +19,14 @@ import ru.practicum.shareit.user.model.User;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemDto {
     long id;
-    //@NotBlank(message = "Имя не должно быть пустым")
     String name;
-    //@NotBlank(message = "Описание не должно быть пустым")
     String description;
-    //@NotNull(message = "Доступность должна быть указана явно")
-    Boolean available;    //Boolean класс обертка boolean. может быть true, false, NULL.
+    Boolean available;
     User owner;
     ItemRequest request;
+    BookingDto lastBooking;
+    BookingDto nextBooking;
+    List<CommentDto> comments = new ArrayList<>();
 }
 
 //Разделять объекты, которые хранятся в базе данных и которые возвращаются пользователям,
