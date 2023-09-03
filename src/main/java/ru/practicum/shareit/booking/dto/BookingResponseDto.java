@@ -1,12 +1,13 @@
 package ru.practicum.shareit.booking.dto;
 
-import lombok.AccessLevel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.booking.model.Status;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.user.dto.UserDto;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDateTime;
 
 /**
@@ -17,14 +18,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingDto {
+public class BookingResponseDto {
     Long id;
-    LocalDateTime start;
-    LocalDateTime end;
     ItemDto item;
     long itemId;
     UserDto booker;
-
-    long bookerId;
     Status status;
+    @FutureOrPresent
+    LocalDateTime start;
+    @Future
+    LocalDateTime end;
 }

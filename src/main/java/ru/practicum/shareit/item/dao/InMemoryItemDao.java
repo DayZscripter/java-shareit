@@ -8,7 +8,7 @@ import java.util.*;
 
 @Repository
 @Slf4j
-public class InMemoryItemDaoImpl implements ItemDao {
+public class InMemoryItemDao implements ItemDao {
     private final Map<Long, Item> items = new HashMap<>();
     private Long itemId = 1L;
 

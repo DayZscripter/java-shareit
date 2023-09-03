@@ -1,10 +1,11 @@
 package ru.practicum.shareit.request.model;
 
-import lombok.AccessLevel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 import ru.practicum.shareit.user.model.User;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -14,10 +15,19 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "requests", schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ItemRequest {       //класс, отвечающий за запрос вещи.
-    Long id;                     //уникальный идентификатор запроса.
-    final String description;    //текст запроса, содержащий описание требуемой вещи.
-    User requestor;              //пользователь, создавший запрос.
-    LocalDateTime created;       // дата и время создания запроса.
+public class ItemRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @Column(name = "description")
+    String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "requester_id", nullable = false)
+    User requester;
+    @CreationTimestamp
+    @Column(name = "created")
+    LocalDateTime created;
 }
