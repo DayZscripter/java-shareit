@@ -27,6 +27,7 @@ public class ItemDto {
     BookingDto lastBooking;
     BookingDto nextBooking;
     List<CommentDto> comments = new ArrayList<>();
+    long requestId;
 }
 
 //Разделять объекты, которые хранятся в базе данных и которые возвращаются пользователям,

@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class ItemRequestDto {
     Long id;
     final String description;
+    //создатель запроса
     User requestor;
     LocalDateTime created;
 }
