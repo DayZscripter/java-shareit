@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-public class InMemoryUserDaoImpl implements UserDao {
+public class InMemoryUserDao implements UserDao {
     private final Map<Long, User> users = new HashMap<>();
     private Long userId = 1L;
 
