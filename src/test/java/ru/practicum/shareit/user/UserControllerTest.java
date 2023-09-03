@@ -48,7 +48,7 @@ class UserControllerTest {
     @Test
     void getUsers() {
         List<UserDto> userDtoList = List.of(UserDto.builder()
-                .email("@yandex.ru")
+                .email("@gmail.com")
                 .build());
         when(userService.getAllUsers()).thenReturn(userDtoList);
 
@@ -68,7 +68,7 @@ class UserControllerTest {
         long userId = 0L;
         UserDto userToUdpate = UserDto.builder()
                 .name(null)
-                .email("@yandex.ru")
+                .email("@gmail.com")
                 .build();
 
         mockMvc.perform(patch("/users/{userId}", userId)

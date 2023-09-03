@@ -1,7 +1,9 @@
 package ru.practicum.shareit.booking;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AccessLevel;
 import lombok.SneakyThrows;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +30,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = BookingController.class)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 class BookingControllerTest {
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
     @MockBean
-    private BookingService bookingService;
-    private User booker;
-    private User owner;
-    private ItemDto item;
-    private BookingDto bookingDto;
-    private int from;
-    private int size;
+    BookingService bookingService;
+    User booker;
+    User owner;
+    ItemDto item;
+    BookingDto bookingDto;
+    int from;
+    int size;
 
     @BeforeEach
     @Test
