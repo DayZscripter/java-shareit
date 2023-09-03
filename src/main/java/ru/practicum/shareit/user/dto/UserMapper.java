@@ -1,11 +1,11 @@
 package ru.practicum.shareit.user.dto;
 
-import lombok.experimental.UtilityClass;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import ru.practicum.shareit.user.model.User;
 
-@UtilityClass
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
-    // Mapper-класс и методы преобразования объекта модели в DTO-объект и обратно
     public static UserDto toUserDto(User user) {
         return UserDto.builder()
                 .id(user.getId())

@@ -28,10 +28,10 @@ public class Item {
     @Column(name = "available")
     boolean available;
     @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "owner_id")
     User owner;
     @ManyToOne
-    @JoinColumn(name = "request_id", nullable = false)
+    @JoinColumn(name = "request_id")
     ItemRequest request;
 
 

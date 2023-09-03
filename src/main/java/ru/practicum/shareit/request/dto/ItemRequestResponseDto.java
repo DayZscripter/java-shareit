@@ -2,9 +2,9 @@ package ru.practicum.shareit.request.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * TODO Sprint add-item-requests.
@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ItemRequestDto {
+public class ItemRequestResponseDto {
     final String description;
     Long id;
-    //создатель запроса
-    User requestor;
+    List<ItemRequestResponseDtoItem> items;
     LocalDateTime created;
+
 }
