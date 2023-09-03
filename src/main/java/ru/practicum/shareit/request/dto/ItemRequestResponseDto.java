@@ -15,8 +15,8 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequestResponseDto {
-    Long id;
     final String description;
+    Long id;
     List<ItemRequestResponseDtoItem> items;
     LocalDateTime created;
 

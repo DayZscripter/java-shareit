@@ -2,7 +2,6 @@ package ru.practicum.shareit.item.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.dto.ItemRequestResponseDtoItem;
 
@@ -23,7 +22,7 @@ public class ItemMapper {
                 .id(itemDto.getId())
                 .name(itemDto.getName())
                 .description(itemDto.getDescription())
-                .available(itemDto.getAvailable() == null ? false : itemDto.getAvailable())
+                .available(itemDto.getAvailable() != null && itemDto.getAvailable())
                 .build();
 
     }

@@ -2,7 +2,6 @@ package ru.practicum.shareit.request.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.request.model.ItemRequest;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

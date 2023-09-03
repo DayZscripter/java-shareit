@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequestDto {
-    Long id;
     final String description;
+    Long id;
     //создатель запроса
     User requestor;
     LocalDateTime created;
