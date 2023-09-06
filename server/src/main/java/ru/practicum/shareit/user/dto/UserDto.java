@@ -2,23 +2,20 @@ package ru.practicum.shareit.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDto {
-
     @JsonProperty("id")
-    private long id;
+    long id;
     @JsonProperty("name")
-    private String name;
+    String name;
     @JsonProperty("email")
-    private String email;
-
+    String email;
 }

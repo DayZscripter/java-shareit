@@ -1,18 +1,17 @@
 package ru.practicum.shareit.request.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequestResponseDtoItem {
-    private long id;
-    private String name;
-    private String description;
-    private long requestId;
-    private boolean available;
+    long id;
+    String name;
+    String description;
+    long requestId;
+    boolean available;
 }

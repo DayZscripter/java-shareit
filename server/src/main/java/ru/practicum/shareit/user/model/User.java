@@ -1,25 +1,26 @@
 package ru.practicum.shareit.user.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-
+/**
+ * TODO Sprint add-controllers.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "users", schema = "public")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;      //уникальный идентификатор пользователя
     @Column(name = "name")
-    private String name;
+    String name;  //имя или логин пользователя
     @Column(name = "email", unique = true)
-    private String email;
+    String email; //адрес электронной почты
 }

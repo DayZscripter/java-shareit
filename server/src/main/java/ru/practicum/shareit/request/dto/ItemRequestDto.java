@@ -1,9 +1,7 @@
 package ru.practicum.shareit.request.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
@@ -15,9 +13,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequestDto {
-    private Long id;
-    private String description;
-    private User requestor; //пользователь, создавший запрос
-    private LocalDateTime created;
+    Long id;
+    String description;
+    User requestor; //создатель запроса
+    LocalDateTime created;
 }

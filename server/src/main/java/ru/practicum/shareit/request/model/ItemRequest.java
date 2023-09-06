@@ -1,9 +1,7 @@
 package ru.practicum.shareit.request.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import ru.practicum.shareit.user.model.User;
 
@@ -19,17 +17,18 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "requests", schema = "public")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ItemRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @Column(name = "description")
-    private String description;
+    String description;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requester_id", nullable = false)
-    private User requester;
+    User requester;
     @CreationTimestamp
     @Column(name = "created")
-    private LocalDateTime created;
+    LocalDateTime created;
 
 }
