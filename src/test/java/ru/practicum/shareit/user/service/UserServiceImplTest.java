@@ -36,8 +36,8 @@ class UserServiceImplTest {
     void setUser() {
         expectedUser = User.builder()
                 .id(1L)
-                .name("Olik")
-                .email("Olik@yandex.ru")
+                .name("Evgenii")
+                .email("jkrehabjk@gmail.com")
                 .build();
     }
 
