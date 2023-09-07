@@ -18,6 +18,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+import static ru.practicum.shareit.util.Constants.header;
+
 @Controller
 @RequestMapping(path = "/items")
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class ItemController {
 
     @PostMapping
     @Validated(ValidationGroups.Create.class)
-    public ResponseEntity<Object> addItem(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ResponseEntity<Object> addItem(@RequestHeader(header) Long userId,
                                           @RequestBody @Valid ItemItemRequestDto requestDto) {
         log.info("Creating item {}, userId={}", requestDto, userId);
         return itemClient.addItem(userId, requestDto);
@@ -37,7 +39,7 @@ public class ItemController {
     @PatchMapping("/{itemId}")
 //    @ResponseStatus(HttpStatus.OK)
     @Validated(ValidationGroups.Update.class)
-    public ResponseEntity<Object> updateItem(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ResponseEntity<Object> updateItem(@RequestHeader(header) Long userId,
                                              @PathVariable long itemId,
                                              @Valid @RequestBody ItemItemRequestDto itemDto) {
         log.info("Обновление вещи id: {}", itemId);
@@ -46,14 +48,14 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<Object> getItemById(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ResponseEntity<Object> getItemById(@RequestHeader(header) Long userId,
                                               @PathVariable long itemId) {
         log.info("Get item {}, userId={}", itemId, userId);
         return itemClient.getItem(itemId, userId);
     }
 
     @GetMapping
-    public ResponseEntity<Object> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ResponseEntity<Object> getItemsByUserId(@RequestHeader(header) Long userId,
                                                    @PositiveOrZero
                                                    @RequestParam(name = "from", defaultValue = "0") Integer from,
                                                    @Positive
@@ -74,7 +76,7 @@ public class ItemController {
 
     @PostMapping("/{itemId}/comment")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> addComment(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ResponseEntity<Object> addComment(@RequestHeader(header) Long userId,
                                              @RequestBody CommentDto commentDto,
                                              @PathVariable long itemId) {
 

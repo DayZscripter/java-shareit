@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import static ru.practicum.shareit.util.Constants.header;
+
 @Controller
 @RequestMapping(path = "/requests")
 @RequiredArgsConstructor
@@ -25,30 +27,36 @@ public class ItemRequestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Validated(ValidationGroups.Create.class)
-    public ResponseEntity<Object> addRequest(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ResponseEntity<Object> addRequest(@RequestHeader(header) Long userId,
                                              @Valid @RequestBody ItemRequestDto itemRequestDto) {
+        log.info("Добавлен новый запрос на бронирование: {}", itemRequestDto);
         return requestClient.addItemRequest(userId, itemRequestDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public ResponseEntity<Object> getItemsByUserId(@RequestHeader(header) Long userId) {
+        log.info("Получен список запросов текущего пользователя " +
+                "с id {}.", userId);
         return requestClient.getItemsRequests(userId);
     }
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> returnAll(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ResponseEntity<Object> returnAll(@RequestHeader(header) Long userId,
                                             @RequestParam(defaultValue = "0") @Min(0) Integer from,
                                             @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer size) {
         var result = requestClient.getAllRequests(userId, from, size);
+        log.info("Получен список запросов пользователя с id {}, созданных другими пользователями, " +
+                ", from = {}, size = {}.", userId, from, size);
         return result;
     }
 
     @GetMapping("/{requestId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> get(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ResponseEntity<Object> get(@RequestHeader(header) Long userId,
                                       @PathVariable long requestId) {
+        log.info("Получен запрос с id {}, userId {}.", requestId, userId);
         return requestClient.getRequestById(userId, requestId);
     }
 }

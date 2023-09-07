@@ -13,6 +13,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
 
+import static ru.practicum.shareit.utill.Constants.header;
+
 /**
  * TODO Sprint add-item-requests.
  */
@@ -25,20 +27,20 @@ public class ItemRequestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ItemRequestDto addRequest(@RequestHeader("X-Sharer-User-Id") Long userId,
+    public ItemRequestDto addRequest(@RequestHeader(header) Long userId,
                                      @Valid @RequestBody ItemRequestDto itemRequestDto) {
         return itemRequestService.addItemRequest(userId, itemRequestDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ItemRequestResponseDto> getItemsByUserId(@RequestHeader("X-Sharer-User-Id") long userId) {
+    public List<ItemRequestResponseDto> getItemsByUserId(@RequestHeader(header) Long userId) {
         return itemRequestService.getItemsRequests(userId);
     }
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<ItemRequestResponseDto> returnAll(@RequestHeader("X-Sharer-User-Id") long userId,
+    public List<ItemRequestResponseDto> returnAll(@RequestHeader(header) Long userId,
                                                   @RequestParam(defaultValue = "0") @Min(0) Integer from,
                                                   @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer size) {
         var result = itemRequestService.getAllRequests(userId, from, size);
@@ -47,7 +49,7 @@ public class ItemRequestController {
 
     @GetMapping("/{requestId}")
     @ResponseStatus(HttpStatus.OK)
-    public ItemRequestResponseDto get(@RequestHeader("X-Sharer-User-Id") long userId,
+    public ItemRequestResponseDto get(@RequestHeader(header) Long userId,
                                       @PathVariable long requestId) {
         return itemRequestService.getRequestById(userId, requestId);
     }
