@@ -1,9 +1,7 @@
 package ru.practicum.shareit.item;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AccessLevel;
 import lombok.SneakyThrows;
-import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +21,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ItemController.class)
-@FieldDefaults(level = AccessLevel.PRIVATE)
 class ItemControllerTest {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     @MockBean
-    ItemService itemService;
-    ItemDto itemDto;
+    private ItemService itemService;
+    private ItemDto itemDto;
 
     @BeforeEach
     @Test

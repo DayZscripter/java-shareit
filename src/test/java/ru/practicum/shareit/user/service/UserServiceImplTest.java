@@ -42,25 +42,13 @@ class UserServiceImplTest {
     }
 
     @Test
-    void addUserWhenUserNameValidThenSaveUser() {
+    void addUser_whenUserNameValid_thenSaveUser() {
         when(userRepository.save(expectedUser)).thenReturn(expectedUser);
 
         UserDto actualUser = userService.addUser(UserMapper.toUserDto(expectedUser));
 
         assertEquals(UserMapper.toUser(actualUser), expectedUser);
         verify(userRepository).save(expectedUser);
-    }
-
-    @Test
-    void updateWhenAddUserWithIncorrectIdThenThrowObjectNotFoundException() {
-        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
-
-        ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () ->
-                userService.getUserById(expectedUser.getId()));
-
-        assertThat(exception.getMessage(), equalTo("Пользователя не существует!"));
-        verify(userRepository, never()).save(expectedUser);
-        verify(userRepository).findById(expectedUser.getId());
     }
 
     @Test
@@ -72,6 +60,18 @@ class UserServiceImplTest {
 
         assertThat(UserMapper.toUser(returnedUser), equalTo(expectedUser));
         verify(userRepository).save(expectedUser);
+        verify(userRepository).findById(expectedUser.getId());
+    }
+
+    @Test
+    void update_whenAddUserWithIncorrectId_thenThrowObjectNotFoundException() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () ->
+                userService.getUserById(expectedUser.getId()));
+
+        assertThat(exception.getMessage(), equalTo("Пользователя не существует!"));
+        verify(userRepository, never()).save(expectedUser);
         verify(userRepository).findById(expectedUser.getId());
     }
 
@@ -91,14 +91,14 @@ class UserServiceImplTest {
     }
 
     @Test
-    void deleteWhenUserFoundThenDeletenUser() {
+    void deleteWhenUserFound_ThenDeletenUser() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(expectedUser));
         userService.deleteUser(expectedUser.getId());
         verify(userRepository, times(1)).deleteById(expectedUser.getId());
     }
 
     @Test
-    void deleteWhenUserNotFoundThenThrowObjectNotFoundException() {
+    void deleteWhenUserNotFound_thenThrowObjectNotFoundException() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () ->
@@ -109,14 +109,14 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getUserByIdWhenUserFoundThenReturnUser() {
+    void getUserByIdWhenUserFound_ThenReturnUser() {
         when(userRepository.findById(expectedUser.getId())).thenReturn(Optional.of(expectedUser));
         UserDto actualUser = userService.getUserById(expectedUser.getId());
         assertEquals(UserMapper.toUser(actualUser), expectedUser);
     }
 
     @Test
-    void getUserByIdWhenUserFoundThenObjectNotFoundException() {
+    void getUserByIdWhenUserFound_ThenObjectNotFoundException() {
         when(userRepository.findById(expectedUser.getId())).thenReturn(Optional.empty());
 
         ObjectNotFoundException exception = assertThrows(ObjectNotFoundException.class, () ->
